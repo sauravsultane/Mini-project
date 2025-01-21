@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+  </head>
+  <body class="w-full h-screen bg-zinc-900 flex items-center justify-center">
+    <div
+      class="flex item-center justify-center p-8 rounded-lg shadow-lg w-full max-w-md"
+    >
+      <form class="space-y-4 bg-zinc-800 rounded-lg p-5 text-white" action="/register" method="post">
+        <h3 class="text-3xl font-bold flex justify-center mb-5">
+          Create An Account
+        </h3>
+        <input
+          class="bg-zinc-700 outline-none px-4 py-3 rounded-lg w-full"
+          type="text"
+          name="name"
+          placeholder="Name"
+        />
+
+        <input
+          class="bg-zinc-700 outline-none px-4 py-3 rounded-lg w-full"
+          type="text"
+          name="username"
+          placeholder="Username"
+        />
+        <input
+          class="bg-zinc-700 outline-none px-4 py-3 rounded-lg w-full"
+          type="email"
+          name="email"
+          placeholder="Email"
+        />
+        <input
+          class="bg-zinc-700 outline-none px-4 py-3 rounded-lg w-full"
+          type="password"
+          name="password"
+          placeholder="Password"
+        />
+        <input
+          class="bg-zinc-700 outline-none px-4 py-3 rounded-lg w-full appearance-none"
+          type="number"
+          name="age"
+          placeholder="Age"
+        />
+        <input
+          class="bg-blue-500 outline-none px-4 py-3 rounded-lg w-full"
+          type="submit"
+          value="Create Account"
+        />
+        <div class="mt-5" >
+          <a href="/login" class="text-blue-600">Already have an account</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
