@@ -5,20 +5,21 @@ mongoose.connect("mongodb://127.0.0.1:27017/miniproject");
 
 // Define the schema
 const postSchema = new mongoose.Schema({
-    user:
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
+  content: { type: String, required: true },
+  likes: [
     {
-        type:mongoose.Schema.Types.ObjectId,ref:"user"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
     },
-    date:{
-        type:Date,
-        default:Date.now()
-    },
-    contant:String,
-    likes:[
-        {
-            type:mongoose.Schema.Types.ObjectId,ref:"user"
-        }
-    ]
+  ],
 });
 
 // Create and export the model

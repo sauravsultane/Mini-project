@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const userModel = require("./models/user");
+const postModel = require("./models/post");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -21,19 +22,35 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.post("/post", isLoggedIn, async (req, res) => {
-  let{content}=req.body;
-  let user = await userModel.findOne({ email: req.user.email });
-  let post = await postModel.create({
-    user:user._id,
-    content
+app.get("/profile", isLoggedIn, async (req, res) => {
+  try {
+    // Populate the posts with full content
+    let user = await userModel.findOne({ email: req.user.email }).populate({
+      path: "posts", // Reference to posts
+      select: "content", // Include only the content field
+    });
 
-  })
-  user.posts.push(post._id);
-
+    if (!user) return res.status(404).send("User not found");
+    console.log(user); // Debugging: Ensure user data is being fetched
+    res.render("profile", { user }); // Pass user data to the frontend
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
 });
 
+app.post("/post", isLoggedIn, async (req, res) => {
+  let user = await userModel.findOne({ email: req.user.email });
+  let { content } = req.body;
+  let post = await postModel.create({
+    user: user._id,
+    content,
+  });
 
+  user.posts.push(post._id);
+  await user.save();
+  res.redirect("/profile");
+});
 
 app.get("/logout", (req, res) => {
   res.cookie("token", "", { httpOnly: true, secure: true });
