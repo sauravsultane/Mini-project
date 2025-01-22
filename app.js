@@ -26,8 +26,8 @@ app.get("/profile", isLoggedIn, async (req, res) => {
   try {
     // Populate the posts with full content
     let user = await userModel.findOne({ email: req.user.email }).populate({
-      path: "posts", // Reference to posts
-      select: "content", // Include only the content field
+      path: "posts"// Reference to posts
+      // select: "content", // Include only the content field
     });
 
     if (!user) return res.status(404).send("User not found");
